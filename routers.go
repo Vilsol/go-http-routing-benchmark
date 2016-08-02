@@ -34,7 +34,6 @@ import (
 	"github.com/gocraft/web"
 	"github.com/gorilla/mux"
 	"github.com/julienschmidt/httprouter"
-	"github.com/labstack/echo"
 	llog "github.com/lunny/log"
 	"github.com/lunny/tango"
 	vulcan "github.com/mailgun/route"
@@ -483,8 +482,8 @@ func loadGocraftWebSingle(method, path string, handler interface{}) http.Handler
 }
 
 // chi
-func chiHandleWrite(ctx netcontext.Context, w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, chi.URLParams(ctx)["name"])
+func chiHandleWrite(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, chi.URLParam(r, "name"))
 }
 
 func loadChi(routes []route) http.Handler {
@@ -513,7 +512,7 @@ func loadChi(routes []route) http.Handler {
 	return mux
 }
 
-func loadChiSingle(method, path string, handler interface{}) http.Handler {
+func loadChiSingle(method, path string, handler http.HandlerFunc) http.Handler {
 	mux := chi.NewRouter()
 	switch method {
 	case "GET":

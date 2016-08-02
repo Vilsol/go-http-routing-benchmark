@@ -89,9 +89,9 @@ func init() {
 	calcMem("Denco", func() {
 		gplusDenco = loadDenco(gplusAPI)
 	})
-	calcMem("Echo", func() {
-		gplusEcho = loadEcho(gplusAPI)
-	})
+	// calcMem("Echo", func() {
+	// 	gplusEcho = loadEcho(gplusAPI)
+	// })
 	calcMem("Gin", func() {
 		gplusGin = loadGin(gplusAPI)
 	})

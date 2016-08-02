@@ -327,9 +327,9 @@ func init() {
 	calcMem("Denco", func() {
 		githubDenco = loadDenco(githubAPI)
 	})
-	calcMem("Echo", func() {
-		githubEcho = loadEcho(githubAPI)
-	})
+	// calcMem("Echo", func() {
+	// 	githubEcho = loadEcho(githubAPI)
+	// })
 	calcMem("Gin", func() {
 		githubGin = loadGin(githubAPI)
 	})
