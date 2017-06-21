@@ -25,6 +25,7 @@ import (
 	"github.com/go-playground/lars"
 	"github.com/pressly/chi"
 	tigertonic "github.com/rcrowley/go-tigertonic"
+	"github.com/go-chi/chi"
 	// "github.com/daryl/zeus"
 	"github.com/dimfeld/httptreemux"
 	"github.com/gin-gonic/gin"
