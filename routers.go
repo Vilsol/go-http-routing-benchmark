@@ -22,10 +22,9 @@ import (
 	"github.com/astaxie/beego/context"
 	"github.com/bmizerany/pat"
 	restful "github.com/emicklei/go-restful"
-	"github.com/go-playground/lars"
-	"github.com/pressly/chi"
-	tigertonic "github.com/rcrowley/go-tigertonic"
 	"github.com/go-chi/chi"
+	"github.com/go-playground/lars"
+	tigertonic "github.com/rcrowley/go-tigertonic"
 	// "github.com/daryl/zeus"
 	"github.com/dimfeld/httptreemux"
 	"github.com/gin-gonic/gin"
@@ -35,6 +34,7 @@ import (
 	"github.com/gocraft/web"
 	"github.com/gorilla/mux"
 	"github.com/julienschmidt/httprouter"
+	"github.com/labstack/echo"
 	llog "github.com/lunny/log"
 	"github.com/lunny/tango"
 	vulcan "github.com/mailgun/route"
@@ -46,15 +46,14 @@ import (
 	_ "github.com/naoina/kocha-urlrouter/doublearray"
 	"github.com/pilu/traffic"
 	"github.com/plimble/ace"
+	"github.com/revel/pathtree"
 	"github.com/revel/revel"
-	"github.com/robfig/pathtree"
 	"github.com/typepress/rivet"
-	// "github.com/ursiform/bear"
+	"github.com/ursiform/bear"
 	"github.com/vanng822/r2router"
 	goji "github.com/zenazn/goji/web"
 	gojiv2 "goji.io"
 	gojiv2pat "goji.io/pat"
-	netcontext "golang.org/x/net/context"
 )
 
 type route struct {
@@ -138,45 +137,45 @@ func loadAceSingle(method, path string, handle ace.HandlerFunc) http.Handler {
 }
 
 // bear
-// func bearHandler(_ http.ResponseWriter, _ *http.Request, _ *bear.Context) {}
-//
-// func bearHandlerWrite(w http.ResponseWriter, _ *http.Request, ctx *bear.Context) {
-// 	io.WriteString(w, ctx.Params["name"])
-// }
-//
-// func bearHandlerTest(w http.ResponseWriter, r *http.Request, _ *bear.Context) {
-// 	io.WriteString(w, r.RequestURI)
-// }
-//
-// func loadBear(routes []route) http.Handler {
-// 	h := bearHandler
-// 	if loadTestHandler {
-// 		h = bearHandlerTest
-// 	}
-//
-// 	router := bear.New()
-// 	re := regexp.MustCompile(":([^/]*)")
-// 	for _, route := range routes {
-// 		switch route.method {
-// 		case "GET", "POST", "PUT", "PATCH", "DELETE":
-// 			router.On(route.method, re.ReplaceAllString(route.path, "{$1}"), h)
-// 		default:
-// 			panic("Unknown HTTP method: " + route.method)
-// 		}
-// 	}
-// 	return router
-// }
-//
-// func loadBearSingle(method string, path string, handler bear.HandlerFunc) http.Handler {
-// 	router := bear.New()
-// 	switch method {
-// 	case "GET", "POST", "PUT", "PATCH", "DELETE":
-// 		router.On(method, path, handler)
-// 	default:
-// 		panic("Unknown HTTP method: " + method)
-// 	}
-// 	return router
-// }
+func bearHandler(_ http.ResponseWriter, _ *http.Request, _ *bear.Context) {}
+
+func bearHandlerWrite(w http.ResponseWriter, _ *http.Request, ctx *bear.Context) {
+	io.WriteString(w, ctx.Params["name"])
+}
+
+func bearHandlerTest(w http.ResponseWriter, r *http.Request, _ *bear.Context) {
+	io.WriteString(w, r.RequestURI)
+}
+
+func loadBear(routes []route) http.Handler {
+	h := bearHandler
+	if loadTestHandler {
+		h = bearHandlerTest
+	}
+
+	router := bear.New()
+	re := regexp.MustCompile(":([^/]*)")
+	for _, route := range routes {
+		switch route.method {
+		case "GET", "POST", "PUT", "PATCH", "DELETE":
+			router.On(route.method, re.ReplaceAllString(route.path, "{$1}"), h)
+		default:
+			panic("Unknown HTTP method: " + route.method)
+		}
+	}
+	return router
+}
+
+func loadBearSingle(method string, path string, handler bear.HandlerFunc) http.Handler {
+	router := bear.New()
+	switch method {
+	case "GET", "POST", "PUT", "PATCH", "DELETE":
+		router.On(method, path, handler)
+	default:
+		panic("Unknown HTTP method: " + method)
+	}
+	return router
+}
 
 // beego
 func beegoHandler(ctx *context.Context) {}
