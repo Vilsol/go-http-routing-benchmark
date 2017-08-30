@@ -383,9 +383,9 @@ func BenchmarkPossum_StaticAll(b *testing.B) {
 func BenchmarkR2router_StaticAll(b *testing.B) {
 	benchRoutes(b, staticR2router, staticRoutes)
 }
-func BenchmarkRevel_StaticAll(b *testing.B) {
-	benchRoutes(b, staticRevel, staticRoutes)
-}
+// func BenchmarkRevel_StaticAll(b *testing.B) {
+// 	benchRoutes(b, staticRevel, staticRoutes)
+// }
 func BenchmarkRivet_StaticAll(b *testing.B) {
 	benchRoutes(b, staticRivet, staticRoutes)
 }
