@@ -110,7 +110,7 @@ func httpHandlerFuncTest(w http.ResponseWriter, r *http.Request) {
 func aceHandle(_ *ace.C) {}
 
 func aceHandleWrite(c *ace.C) {
-	io.WriteString(c.Writer, c.Param("name"))
+	io.WriteString(c.Writer, c.Params.ByName("name"))
 }
 
 func aceHandleTest(c *ace.C) {
@@ -1270,7 +1270,7 @@ func loadRevel(routes []route) http.Handler {
 	// parseRoutes
 	var rs []*revel.Route
 	for _, r := range routes {
-		rs = append(rs, revel.NewRoute(r.method, r.path, h, "", "", 0))
+		rs = append(rs, revel.NewRoute(nil, r.method, r.path, h, "", "", 0))
 	}
 	router.Routes = rs
 
@@ -1296,7 +1296,7 @@ func loadRevel(routes []route) http.Handler {
 func loadRevelSingle(method, path, action string) http.Handler {
 	router := revel.NewRouter("")
 
-	route := revel.NewRoute(method, path, action, "", "", 0)
+	route := revel.NewRoute(nil, method, path, action, "", "", 0)
 	if err := router.Tree.Add(route.TreePath, route); err != nil {
 		panic(err)
 	}
@@ -1309,12 +1309,12 @@ func loadRevelSingle(method, path, action string) http.Handler {
 // Rivet
 func rivetHandler() {}
 
-func rivetHandlerWrite(c *rivet.Context) {
-	c.WriteString(c.Get("name"))
+func rivetHandlerWrite(c rivet.Context) {
+	c.WriteString(c.GetParams().Get("name"))
 }
 
-func rivetHandlerTest(c *rivet.Context) {
-	c.WriteString(c.Req.RequestURI)
+func rivetHandlerTest(c rivet.Context) {
+	c.WriteString(c.Request().URL.String())
 }
 
 func loadRivet(routes []route) http.Handler {
@@ -1323,7 +1323,7 @@ func loadRivet(routes []route) http.Handler {
 		h = rivetHandlerTest
 	}
 
-	router := rivet.New()
+	router := rivet.NewRouter(nil)
 	for _, route := range routes {
 		router.Handle(route.method, route.path, h)
 	}
@@ -1331,7 +1331,7 @@ func loadRivet(routes []route) http.Handler {
 }
 
 func loadRivetSingle(method, path string, handler interface{}) http.Handler {
-	router := rivet.New()
+	router := rivet.NewRouter(nil)
 
 	router.Handle(method, path, handler)
 
