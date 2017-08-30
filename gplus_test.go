@@ -36,7 +36,7 @@ var gplusAPI = []route{
 }
 
 var (
-	gplusAce http.Handler
+	gplusAce         http.Handler
 	gplusBear        http.Handler
 	gplusBeego       http.Handler
 	gplusBone        http.Handler

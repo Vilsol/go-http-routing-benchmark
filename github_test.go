@@ -274,7 +274,7 @@ var githubAPI = []route{
 }
 
 var (
-	githubAce http.Handler
+	githubAce         http.Handler
 	githubBear        http.Handler
 	githubBeego       http.Handler
 	githubBone        http.Handler

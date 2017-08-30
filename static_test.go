@@ -172,7 +172,7 @@ var staticRoutes = []route{
 var (
 	staticHttpServeMux http.Handler
 
-	staticAce http.Handler
+	staticAce         http.Handler
 	staticBear        http.Handler
 	staticBeego       http.Handler
 	staticBone        http.Handler

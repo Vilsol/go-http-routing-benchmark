@@ -56,7 +56,7 @@ var parseAPI = []route{
 }
 
 var (
-	parseAce http.Handler
+	parseAce         http.Handler
 	parseBear        http.Handler
 	parseBeego       http.Handler
 	parseBone        http.Handler
